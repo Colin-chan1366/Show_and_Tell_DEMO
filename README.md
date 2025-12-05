@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/WG_g337P)
 # E4040 2025 Fall Project
-## TODO: Finetuned-YOLOE for Object Detection
+## TODO: Finetuned Neural Image Caption Generator
 
 Repository for E4040 2025 Fall Project
   - Distributed as Github repository and shared via Github Classroom
