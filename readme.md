@@ -1,65 +1,94 @@
-### Introduction
-This neural system for image captioning is roughly based on the paper "Show and Tell: A Neural Image Caption Generatorn" by Vinayls et al. (ICML2015). The input is an image, and the output is a sentence describing the content of the image. It uses a convolutional neural network to extract visual features from the image, and uses a LSTM recurrent neural network to decode these features into a sentence. This project is implemented using the Tensorflow library, and allows end-to-end training of both CNN and RNN parts.
+# Show-and-Tell Image Captioning (TensorFlow 1.15 GPU)
 
-### Prerequisites
-* **Tensorflow** ([instructions](https://www.tensorflow.org/install/))
-* **NumPy** ([instructions](https://scipy.org/install.html))
-* **OpenCV** ([instructions](https://pypi.python.org/pypi/opencv-python))
-* **Natural Language Toolkit (NLTK)** ([instructions](http://www.nltk.org/install.html))
-* **Pandas** ([instructions](https://scipy.org/install.html))
-* **Matplotlib** ([instructions](https://scipy.org/install.html))
-* **tqdm** ([instructions](https://pypi.python.org/pypi/tqdm))
+## Overview
+This repo implements the classic Show-and-Tell model for automatic image captioning, based on **TensorFlow 1.15** (GPU) and Python 3.6.  
+All dependencies are packed into a **single Docker image** so you can train/evaluate on any machine with an NVIDIA GPU in minutes.
 
-### Usage
-* **Preparation:** Download the COCO train2014 and val2014 data [here](http://cocodataset.org/#download). Put the COCO train2014 images in the folder `train/images`, and put the file `captions_train2014.json` in the folder `train`. Similarly, put the COCO val2014 images in the folder `val/images`, and put the file `captions_val2014.json` in the folder `val`. Furthermore, download the pretrained VGG16 net [here](https://ucsb.box.com/s/pj4gg3vpei57cf9xewttoqn01qqa3uj4)  if you want to use it to initialize the CNN part.
+---
 
-* **Training:**
-To train a model using the COCO train2014 data, first setup various parameters in the file `config.py` and then run a command like this:
-```shell
-python3 main.py --phase=train \
-    --load_cnn \
-    --cnn_model_file='./vgg16_weights.npz'\
-    [--train_cnn]
+## 🔧 Prerequisites
+- NVIDIA GPU driver ≥ 418
+- [Docker](https://docs.docker.com/get-docker/) & [NVIDIA Docker runtime](https://github.com/NVIDIA/nvidia-docker)
+
+---
+
+## ⚡ Quick Start with Docker
+
+1. **Pull the official TF 1.15 GPU image**
+   ```bash
+   docker pull tensorflow/tensorflow:1.15.0-gpu-py3
+   ```
+
+2. **Clone / enter the repo**
+   ```bash
+   git clone <your-repo-url> show_and_tell && cd show_and_tell
+   ```
+
+3. **Launch the container**
+   ```bash
+   docker run --gpus all -it --rm \
+     -v $(pwd):/workspace \
+     -w /workspace \
+     -p 6006:6006 \
+     tensorflow/tensorflow:1.15.0-gpu-py3 \
+     bash
+   ```
+
+4. **Inside container - install deps & data**
+   ```bash
+   pip install -r requirements.txt
+   python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
+   
+   # system libs for OpenCV
+   apt-get update && apt-get install -y \
+     libsm6 libxext6 libxrender-dev libgomp1 libglib2.0-0
+   ```
+
+5. **Clean old weights (optional)**
+   ```bash
+   rm -rf ./train/*.npy ./models/*
+   ```
+
+6. **Train**
+   ```bash
+   python3 main.py --phase=train --load_cnn --cnn_model_file=vgg16_weights.npz
+   ```
+
+7. **Monitor with TensorBoard**  
+   Open [http://localhost:6006](http://localhost:6006) on your host.
+
+---
+
+## 📂 Docker one-liner for veterans
+```bash
+docker run --gpus all -it --rm -v $PWD:/workspace -w /workspace -p 6006:6006 tensorflow/tensorflow:1.15.0-gpu-py3 bash -c "pip install -r requirements.txt && python -c \"import nltk; nltk.download('punkt'); nltk.download('stopwords')\" && apt-get update && apt-get install -y libsm6 libxext6 libxrender-dev libgomp1 libglib2.0-0 && python3 main.py --phase=train --load_cnn --cnn_model_file=vgg16_weights.npz"
 ```
-Turn on `--train_cnn` if you want to jointly train the CNN and RNN parts. Otherwise, only the RNN part is trained. The checkpoints will be saved in the folder `models`. If you want to resume the training from a checkpoint, run a command like this:
-```shell
-python3 main.py --phase=train \
-    --load \
-    --model_file='./models/xxxxxx.npy'\
-    [--train_cnn]
-```
-To monitor the progress of training, run the following command:
-```shell
-tensorboard --logdir='./summary/'
+
+---
+
+## 🧪 Evaluation / Inference
+```bash
+python3 main.py --phase=test --model_file=./models/ckpt-1000000
 ```
 
-* **Evaluation:**
-To evaluate a trained model using the COCO val2014 data, run a command like this:
-```shell
-python3 main.py --phase=eval \
-    --model_file='./models/xxxxxx.npy'
+---
+
+## 📈 TensorBoard
+Logs are written to `./summary` inside the container (mapped to host).  
+After starting training, browse:
 ```
-The result will be shown in stdout. Furthermore, the generated captions will be saved in the file `val/results.json`.
-
-* **Inference:**
-You can use the trained model to generate captions for any JPEG images! Put such images in the folder `test/images`, and run a command like this:
-```shell
-python3 main.py --phase=test \
-    --model_file='./models/xxxxxx.npy'
+http://localhost:6006
 ```
-The generated captions will be saved in the folder `test/results`.
 
-### Results
-A pretrained model with default configuration can be downloaded [here](https://ucsb.box.com/s/vqcxockfzoxfqltrg4l619x1cfvnskog). This model was trained solely on the COCO train2014 data. It achieves the following BLEU scores on the COCO val2014 data :
-* **BLEU-1 = 62.9%**
-* **BLEU-2 = 43.6%**
-* **BLEU-3 = 29.0%**
-* **BLEU-4 = 19.3%**
+---
 
-Here are some captions generated by this model:
-![examples](test/results/1_result.jpg)
+## 📝 Notes
+- The image ships with CUDA 10.0 & cuDNN 7.4, compatible with TF 1.15.  
+- All Python packages listed in `requirements.txt` are installed via `pip` inside the container; no host-side Python needed.  
+- If you need Jupyter, add `-p 8888:8888` and start `jupyter notebook --ip 0.0.0.0 --allow-root`.
 
-### References
-* [Show and Tell: A Neural Image Caption Generator](https://arxiv.org/pdf/1411.4555.pdf).By Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan ICML 2015.
-* [Adapted from earlier implementation in Tensorflow](https://github.com/DeepRNN/image_captioning)
-* [Microsoft COCO dataset](http://mscoco.org/)
+---
+
+## 🤝 Contributing
+Feel free to open issues or PRs!
+```
