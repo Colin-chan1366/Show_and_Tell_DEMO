@@ -6,13 +6,13 @@ All dependencies are packed into a **single Docker image** so you can train/eval
 
 ---
 
-## 🔧 Prerequisites
+## Prerequisites
 - NVIDIA GPU driver ≥ 418
 - [Docker](https://docs.docker.com/get-docker/) & [NVIDIA Docker runtime](https://github.com/NVIDIA/nvidia-docker)
 
 ---
 
-## ⚡ Quick Start with Docker
+## Quick Start with Docker
 
 1. **Pull the official TF 1.15 GPU image**
    ```bash
@@ -66,14 +66,14 @@ docker run --gpus all -it --rm -v $PWD:/workspace -w /workspace -p 6006:6006 ten
 
 ---
 
-## 🧪 Evaluation / Inference
+## Evaluation / Inference
 ```bash
 python3 main.py --phase=test --model_file=./models/ckpt-1000000
 ```
 
 ---
 
-## 📈 TensorBoard
+## TensorBoard
 Logs are written to `./summary` inside the container (mapped to host).  
 After starting training, browse:
 ```
@@ -82,13 +82,13 @@ http://localhost:6006
 
 ---
 
-## 📝 Notes
+## Notes
 - The image ships with CUDA 10.0 & cuDNN 7.4, compatible with TF 1.15.  
 - All Python packages listed in `requirements.txt` are installed via `pip` inside the container; no host-side Python needed.  
 - If you need Jupyter, add `-p 8888:8888` and start `jupyter notebook --ip 0.0.0.0 --allow-root`.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 Feel free to open issues or PRs!
 ```
