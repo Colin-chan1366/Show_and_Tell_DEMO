@@ -59,7 +59,7 @@ All dependencies are packed into a **single Docker image** so you can train/eval
 
 ---
 
-## 📂 Docker one-liner for veterans
+## Docker one-liner for veterans
 ```bash
 docker run --gpus all -it --rm -v $PWD:/workspace -w /workspace -p 6006:6006 tensorflow/tensorflow:1.15.0-gpu-py3 bash -c "pip install -r requirements.txt && python -c \"import nltk; nltk.download('punkt'); nltk.download('stopwords')\" && apt-get update && apt-get install -y libsm6 libxext6 libxrender-dev libgomp1 libglib2.0-0 && python3 main.py --phase=train --load_cnn --cnn_model_file=vgg16_weights.npz"
 ```
