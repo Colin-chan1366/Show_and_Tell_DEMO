@@ -35,7 +35,10 @@ Students must use a 4-letter groupID, the same one that was chosen in the class 
 
 # Organization of this directory
 To be populated by students, as shown in previous assignments.
+```
 
+TODO: Create a directory/file tree
+```
 # Show-and-Tell Image Captioning (TensorFlow 1.15 GPU)
 
 ## Overview
@@ -129,9 +132,3 @@ http://localhost:6006
 
 ## Contributing
 Feel free to open issues or PRs!
-```
-
-TODO: Create a directory/file tree
-```
-
-```
