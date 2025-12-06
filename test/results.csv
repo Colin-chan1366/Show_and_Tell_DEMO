@@ -1,0 +1,7 @@
+,image_files,caption,prob
+0,./test/images/6.jpg,a group of people standing around a building.,"[4.61300248e-10 1.19482065e-05 9.98996437e-01 ... 8.76129569e-09
+ 1.19045813e-08 7.76752795e-09]"
+1,./test/images/5.jpg,a man is sitting in a chair with a laptop.,"[3.5673875e-10 1.6195356e-05 9.9878329e-01 ... 6.3027432e-09 8.5515053e-09
+ 5.4748215e-09]"
+2,./test/images/4.jpg,a man sitting on a couch with a laptop.,"[3.94132810e-10 1.35917435e-05 9.98854280e-01 ... 6.81976919e-09
+ 9.36250188e-09 6.17231066e-09]"
