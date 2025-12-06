@@ -4,13 +4,14 @@ import numpy as np
 from baseModel import BaseModel
 
 class CaptionGenerator(BaseModel):
+
     def build(self):
         """ Build the model. """
         self.build_cnn()
         self.build_rnn()
         if self.is_train:
             self.build_optimizer()
-            ##self.build_summary() ## TODO : commented the build_summary because it might take extra timw
+            self.build_summary() ## TODO : commented the build_summary because it might take extra timw
 
     def test_cnn(self,image):
         self.imgs = image
