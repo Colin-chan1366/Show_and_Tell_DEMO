@@ -8,6 +8,21 @@ from scipy.misc import imread, imresize
 from imagenet_classes import class_names
 import numpy as np
 
+"""
+https://www.geeksforgeeks.org/python/whats-the-purpose-of-tf-app-flags-in-tensorflow/
+
+import tensorflow as tf
+flag = tf.compat.v1.app.flags
+FLAGS = flag.FLAGS
+
+flag.DEFINE_integer('n_epochs', 100, 'Number of steps')
+flag.DEFINE_float('lr', 0.005, 'Learning rate')
+flag.DEFINE_integer('batch_size', 32, 'Batch Size')
+
+print("Default Learning Rate:", FLAGS.lr) # 0.005
+print("Default Epochs:", FLAGS.n_epochs) # 100
+print("Default Batch Size:", FLAGS.batch_size) # 32
+"""
 FLAGS = tf.app.flags.FLAGS
 
 tf.flags.DEFINE_string('phase', 'train',

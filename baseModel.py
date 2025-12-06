@@ -50,20 +50,23 @@ class BaseModel(object):
                 feed_dict = {self.images: images,
                              self.sentences: sentences,
                              self.masks: masks}
-                # _, summary, global_step = sess.run([self.opt_op,
-                #                                     self.summary,
-                #                                     self.global_step],
-                #                                     feed_dict=feed_dict)
+          
+                _, summary, global_step = sess.run([self.opt_op,
+                                                    self.summary,
+                                                    self.global_step],
+                                                    feed_dict=feed_dict)
+
                 _, global_step = sess.run([self.opt_op,
                                                     self.global_step],
                                                    feed_dict=feed_dict)
                 if (global_step + 1) % config.save_period == 0:
                     self.save()
-                #train_writer.add_summary(summary, global_step)
+                train_writer.add_summary(summary, global_step)
             train_data.reset()
 
         self.save()
         train_writer.close()
+        # from torch.utils.tensorboard import SummaryWriter
         print("Training complete.")
 
     def eval(self, sess, eval_gt_coco, eval_data, vocabulary):
@@ -193,7 +196,17 @@ class BaseModel(object):
                                      str(global_step)+".npy")
 
         print("Loading the model from %s..." %save_path)
-        data_dict = np.load(save_path).item()
+        #data_dict = np.load(save_path).item()
+        # Author: Jianfeng Chen
+        # UNI: jc6175
+        # Date: 12/06/2025
+        # Course: EECS E4040 - Deep Learning & Neural Networks
+        # Assignment: Group Project
+        # Note: I wrote this code myself, except where I have clearly mentioned references or collaborations.
+        # If I collaborated or referred to external sources, I have listed them below:
+        # References / Collaborations:
+        # 1. tensorflow 1.15 version requirnemnts to load numpy with allow_pickle=True - https://stackoverflow.com/questions/75313518/allow-pickle-true-modified-my-dictionary-to-unsized-when-loaded
+        data_dict = np.load(save_path, allow_pickle=True).item()
         count = 0
         for v in tqdm(tf.global_variables()):
             if v.name in data_dict.keys():
