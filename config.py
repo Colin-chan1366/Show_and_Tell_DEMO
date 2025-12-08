@@ -1,7 +1,11 @@
 
 class Config(object):
     """ Wrapper class for various (hyper)parameters. """
-    def __init__(self):
+    def __init__(self,experiment_name='experiment_1'):
+
+
+        self.experiment_name = experiment_name
+
         # about the model architecture
         self.cnn = 'vgg16'               # 'vgg16' or 'resnet50'
         self.max_caption_length = 20
@@ -25,10 +29,15 @@ class Config(object):
         self.attention_loss_factor = 0.01
 
         # about the optimization
+<<<<<<< HEAD
         self.num_epochs = 10
         self.batch_size = 64
+=======
+        self.num_epochs = 5 # if we choose fine-tuning for experiment 2, use 5; experiment 1 use 10 
+        self.batch_size = 64 
+>>>>>>> my-repo/master
         self.optimizer = 'Adam'    # 'Adam', 'RMSProp', 'Momentum' or 'SGD'
-        self.initial_learning_rate = 0.0001
+        self.initial_learning_rate = 0.00001 #if we choose fine-tuning for experiment 2, use 0.00001; experiment 1 use 0.0001 as original lr
         self.learning_rate_decay_factor = 1.0
         self.num_steps_per_decay = 100000
         self.clip_gradients = 5.0
@@ -42,8 +51,13 @@ class Config(object):
 
         # about the saver
         self.save_period = 5645 # save every epoch (5645 batches per epoch) if batch_size = 64 and num of epochs = 10
+<<<<<<< HEAD
         self.save_dir = './models/'
         self.summary_dir = './summary/'
+=======
+        self.save_dir = f'./models/{experiment_name}/'  #change after every experiment
+        self.summary_dir = f'./summary/{experiment_name}/' # change after every experiment
+>>>>>>> my-repo/master
 
         # about the vocabulary
         self.vocabulary_file = './vocabulary.csv'
@@ -52,19 +66,18 @@ class Config(object):
         # about the training
         self.train_image_dir = './train/images/train2014'
         self.train_caption_file = './train/captions_train2014.json'
-        self.temp_annotation_file = './train/anns.csv'
-        self.temp_data_file = './train/data.npy'
-
+        self.temp_annotation_file = f'./train/temp_results_{experiment_name}/anns_{experiment_name}.csv' # change
+        self.temp_data_file = f'./train/temp_results_{experiment_name}/data_{experiment_name}.npy' # change
         # about the evaluation
         self.eval_image_dir = './val/images/val2014'
         self.eval_caption_file = './val/captions_val2014.json'
-        self.eval_result_dir = './val/results/'
-        self.eval_result_file = './val/results.json'
+        self.eval_result_dir = f'./val/results_{experiment_name}/' # change 
+        self.eval_result_file = f'./val/results_{experiment_name}.json' # change 
         self.save_eval_result_as_image = False
 
         # about the testing
         self.test_image_dir = './test/images/'
-        self.test_result_dir = './test/results/'
-        self.test_result_file = './test/results.csv'
+        self.test_result_dir = f'./test/results_{experiment_name}/' # change 
+        self.test_result_file = f'./test/results_{experiment_name}.csv' # change 
 
         self.trainable_variable = False
