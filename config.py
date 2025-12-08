@@ -29,13 +29,8 @@ class Config(object):
         self.attention_loss_factor = 0.01
 
         # about the optimization
-<<<<<<< HEAD
-        self.num_epochs = 10
-        self.batch_size = 64
-=======
         self.num_epochs = 5 # if we choose fine-tuning for experiment 2, use 5; experiment 1 use 10 
         self.batch_size = 64 
->>>>>>> my-repo/master
         self.optimizer = 'Adam'    # 'Adam', 'RMSProp', 'Momentum' or 'SGD'
         self.initial_learning_rate = 0.00001 #if we choose fine-tuning for experiment 2, use 0.00001; experiment 1 use 0.0001 as original lr
         self.learning_rate_decay_factor = 1.0
@@ -51,13 +46,8 @@ class Config(object):
 
         # about the saver
         self.save_period = 5645 # save every epoch (5645 batches per epoch) if batch_size = 64 and num of epochs = 10
-<<<<<<< HEAD
-        self.save_dir = './models/'
-        self.summary_dir = './summary/'
-=======
         self.save_dir = f'./models/{experiment_name}/'  #change after every experiment
         self.summary_dir = f'./summary/{experiment_name}/' # change after every experiment
->>>>>>> my-repo/master
 
         # about the vocabulary
         self.vocabulary_file = './vocabulary.csv'
