@@ -55,7 +55,9 @@ tf.flags.DEFINE_string('image_file','./man.jpg','The file to test the CNN')
 ## TODO : Early stop functionality by considering validation error. We should first split the validation data.
 
 def main(argv):
-    config = Config()
+
+    # just change the experiment_no when we starts a new one
+    config = Config(experiment_name='experiment_2')
     config.phase = FLAGS.phase
     config.train_cnn = FLAGS.train_cnn
     config.beam_size = FLAGS.beam_size
