@@ -123,7 +123,10 @@ All dependencies are packed into a **single Docker image** so you can train/eval
                --cnn_model_file=vgg16_weights.npz
    ```
 8. **Monitor with TensorBoard**  
-   Open [http://localhost:6006](http://localhost:6006) on your host.
+- tensorboard --logdir=./summary/experiment_1 --host=0.0.0.0 --port=6006 &
+- tensorboard --logdir=./summary/experiment_2 --host=0.0.0.0 --port=8888 &
+- tensorboard --logdir=./summary/experiment_2 --host=0.0.0.0 --port=9999 &
+- tensorboard --logdir=./summary/experiment_2 --host=0.0.0.0 --port=1111 &
 
 ---
 
