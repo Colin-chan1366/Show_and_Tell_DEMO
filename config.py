@@ -18,6 +18,7 @@ class Config(object):
         self.num_decode_layers = 1    ## Changed from 2 to 1   # 1 or 2
         self.dim_decode_layer = 1024
 
+
         # about the weight initialization and regularization
         self.fc_kernel_initializer_scale = 0.08
         self.fc_kernel_regularizer_scale = 1e-4
@@ -29,10 +30,10 @@ class Config(object):
         self.attention_loss_factor = 0.01
 
         # about the optimization
-        self.num_epochs = 5 # if we choose fine-tuning for experiment 2, use 5; experiment 1 use 10 
+        self.num_epochs = 10 # if we choose fine-tuning for experiment 2, use 5; experiment 1 use 10 
         self.batch_size = 64 
         self.optimizer = 'Adam'    # 'Adam', 'RMSProp', 'Momentum' or 'SGD'
-        self.initial_learning_rate = 0.00001 #if we choose fine-tuning for experiment 2, use 0.00001; experiment 1 use 0.0001 as original lr
+        self.initial_learning_rate = 0.0001 #if we choose fine-tuning for experiment 2, use 0.00001; experiment 1 use 0.0001 as original lr
         self.learning_rate_decay_factor = 1.0
         self.num_steps_per_decay = 100000
         self.clip_gradients = 5.0
@@ -71,3 +72,5 @@ class Config(object):
         self.test_result_file = f'./test/results_{experiment_name}.csv' # change 
 
         self.trainable_variable = False
+
+        self.open_atten = True # whether to use attention mechanism
