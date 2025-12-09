@@ -38,7 +38,8 @@ class BaseModel(object):
         config = self.config
 
         if not os.path.exists(config.summary_dir):
-            os.mkdir(config.summary_dir)
+            # os.mkdir(config.summary_dir)
+            os.makedirs(config.summary_dir, exist_ok=True)
         train_writer = tf.summary.FileWriter(config.summary_dir,
                                              sess.graph)
 
@@ -56,9 +57,9 @@ class BaseModel(object):
                                                     self.global_step],
                                                     feed_dict=feed_dict)
 
-                _, global_step = sess.run([self.opt_op,
-                                                    self.global_step],
-                                                   feed_dict=feed_dict)
+                # _, global_step = sess.run([self.opt_op,
+                #                                     self.global_step],
+                #                                    feed_dict=feed_dict)
                 if (global_step + 1) % config.save_period == 0:
                     self.save()
                 train_writer.add_summary(summary, global_step)
