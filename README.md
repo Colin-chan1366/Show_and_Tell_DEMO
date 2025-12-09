@@ -91,11 +91,38 @@ All dependencies are packed into a **single Docker image** so you can train/eval
    ```
 
 6. **Train**
-   ```bash
-   python3 main.py --phase=train --load_cnn --cnn_model_file=vgg16_weights.npz
-   ```
 
-7. **Monitor with TensorBoard**  
+- experiment 1 Frozen CNN and Training RNN 
+   ```bash
+   python main.py --phase=train \
+               --open_atten=False \
+               --load_cnn \
+               --cnn_model_file=vgg16_weights.npz
+   ```
+- experiment 2 Finetuning: Based on the experiment 1 best model checkpoints to finetuning the whole architecture(CNN & RNN )
+     ```bash
+   python3 main.py --phase=train \
+              --open_atten=False \
+              --load \
+              --model_file='./models/experiment_1/112900.npy' \
+              --train_cnn \
+   ```
+- experiment 3 Joint training: Unfrozen CNN and Training the whole architecture (CNN & RNN)
+     ```bash
+      python main.py --phase=train \
+               --open_atten=False \
+               --load_cnn \
+               --train_cnn \
+               --cnn_model_file=vgg16_weights.npz
+   ```
+- experiment 4 Frozen CNN and Training RNN with Attention Mechanism
+     ```bash
+   python main.py --phase=train \
+               --open_atten=True \
+               --load_cnn \
+               --cnn_model_file=vgg16_weights.npz
+   ```
+8. **Monitor with TensorBoard**  
    Open [http://localhost:6006](http://localhost:6006) on your host.
 
 ---
