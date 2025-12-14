@@ -121,6 +121,15 @@ All dependencies are packed into a **single Docker image** so you can train/eval
                --open_atten=True \
                --load_cnn \
                --cnn_model_file=vgg16_weights.npz
+
+- experiment 5 Frozen CNN and Training Bidirectional-RNN with Attention Mechanism
+     ```bash
+   python main.py --phase=train \
+               --open_atten=True \
+               --load_cnn \
+               --cnn_model_file=vgg16_weights.npz \
+               --open_bidirection=True
+     
    ```
 8. **Monitor with TensorBoard**  
 - tensorboard --logdir=./summary/experiment_1 --host=0.0.0.0 --port=6006 &
