@@ -31,7 +31,7 @@ class Config(object):
 
         # about the optimization
         self.num_epochs = 10 # if we choose fine-tuning for experiment 2, use 5; experiment 1 use 10 
-        self.batch_size = 64 
+        self.batch_size = 32 
         self.optimizer = 'Adam'    # 'Adam', 'RMSProp', 'Momentum' or 'SGD'
         self.initial_learning_rate = 0.0001 #if we choose fine-tuning for experiment 2, use 0.00001; experiment 1 use 0.0001 as original lr
         self.learning_rate_decay_factor = 1.0
@@ -74,3 +74,5 @@ class Config(object):
         self.trainable_variable = False
 
         self.open_atten = True # whether to use attention mechanism
+
+        self.open_bidirection = True  # Whether to use bidirectional lstm (set to True or 'bidirectional_atten' to enable) 

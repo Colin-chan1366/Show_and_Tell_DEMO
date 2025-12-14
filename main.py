@@ -57,7 +57,7 @@ tf.flags.DEFINE_string('image_file','./man.jpg','The file to test the CNN')
 def main(argv):
 
     # just change the experiment_no when we starts a new one
-    config = Config(experiment_name='experiment_4')
+    config = Config(experiment_name='experiment_5')
     config.phase = FLAGS.phase
     config.train_cnn = FLAGS.train_cnn
     config.beam_size = FLAGS.beam_size
